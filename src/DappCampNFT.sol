@@ -43,7 +43,21 @@ contract DappCampNFT is ERC721Enumerable, Ownable {
         parts[3] = getFavouriteSong(tokenId);
         parts[4] = '</text></svg>';
         string memory output = string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4]));
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": parts[1], "song": parts[2], "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '"}'))));
+        string memory json = Base64.encode(
+            bytes(
+                string(
+                    abi.encodePacked(
+                        '{"name": "',
+                        parts[1],
+                        '", "song": "',
+                        parts[3],
+                        '", "image": "data:image/svg+xml;base64,',
+                        Base64.encode(bytes(output)),
+                        '"}'
+                    )
+                )
+            )
+        );
         output = string(abi.encodePacked('data:application/json;base64,', json));
         return output;
     }
